@@ -1,6 +1,9 @@
 # Created by https://www.gitignore.io/api/java,code,maven,java-web,code-java
 # Edit at https://www.gitignore.io/?templates=java,code,maven,java-web,code-java
 
+### Git ###
+!.gitkeep
+
 ### Code ###
 .vscode/*
 !.vscode/settings.json

@@ -3,13 +3,21 @@ package model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class User implements Serializable {
@@ -17,26 +25,48 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
 	private String firstName, lastName, email;
+	
 	private char[] password;
-	private Timestamp createdOn, lastLogin;
 
-	@Column(name = "ADDRESS_ID")
+	@CreationTimestamp
+	private Timestamp createdOn;
+
+	@UpdateTimestamp
+	private Timestamp updatedOn;
+
+	@OneToOne(optional = true)
+	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_user_address"))
 	private Address address;
 
-	@ManyToMany(mappedBy = "administrator")
-	private Institution administeredInstitution;
+	@OneToMany(mappedBy = "administrator")
+	private List<Institution> administeredInstitutions;
 
 	public User() {
 
 	}
 
-	public User(String firstName, String lastName) {
+	public User(String firstName, String lastName, String email, char[] password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+	}
+
+	public User(String firstName, String lastName, String email, char[] password, Address address) {
+		this(
+			firstName,
+			lastName,
+			email,
+			password
+		);
+
+		this.address = address;
 	}
 
 	public static long getSerialversionuid() {
@@ -91,14 +121,6 @@ public class User implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Timestamp getLastLogin() {
-		return lastLogin;
-	}
-
-	public void setLastLogin(Timestamp lastLogin) {
-		this.lastLogin = lastLogin;
-	}
-
 	public Address getAddress() {
 		return address;
 	}
@@ -107,18 +129,18 @@ public class User implements Serializable {
 		this.address = address;
 	}
 	
-	public Institution getAdministeredInstitution() {
-		return administeredInstitution;
+	public List<Institution> getAdministeredInstitutions() {
+		return administeredInstitutions;
 	}
 
-	public void setAdministeredInstitution(Institution administeredInstitution) {
-		this.administeredInstitution = administeredInstitution;
+	public void setAdministeredInstitution(List<Institution> administeredInstitutions) {
+		this.administeredInstitutions = administeredInstitutions;
 	}
 
 	@Override
 	public String toString() {
-		return "User [createdOn=" + createdOn + ", email=" + email + ", firstName=" + firstName + ", id=" + id
-				+ ", lastLogin=" + lastLogin + ", lastName=" + lastName + ", password=" + Arrays.toString(password)
-				+ "]";
-	}	
+		return "User [address=" + address + ", administeredInstitutions=" + administeredInstitutions + ", createdOn="
+				+ createdOn + ", email=" + email + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName
+				+ ", password=" + Arrays.toString(password) + ", updatedOn=" + updatedOn + "]";
+	}
 }

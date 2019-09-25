@@ -4,10 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class CollectionPoint implements Serializable {
@@ -15,16 +20,19 @@ public class CollectionPoint implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
 	private String name, observations;
 
 	@ManyToOne
-	@Column(name = "INSTITUTION_ID")
+	@JoinColumn(name = "institution_id", foreignKey = @ForeignKey(name = "fk_collectionpoint_institution"))
 	private Institution institution;
 
-	@Column(name = "ADDRESS_ID")
+	@OneToOne
+	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_collectionpoint_address"))
 	private Address address;
 	
 	public CollectionPoint() {

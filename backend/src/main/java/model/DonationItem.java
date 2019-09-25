@@ -3,21 +3,27 @@ package model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
+@IdClass(DonationItemID.class)
 public class DonationItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * TODO: Create new class to serve as composite Primary Key
-	 */
-	
 	@Id
+	@ManyToOne
+	@JoinColumn(name = "donation_id", foreignKey = @ForeignKey(name = "fk_donationitem_donation"))
 	private Donation donation;
 
 	@Id
+	@OneToOne
+	@JoinColumn(name = "donative_id", foreignKey = @ForeignKey(name = "fk_donationitem_donative"))
 	private Donative donative;
 
 	private double quantity;

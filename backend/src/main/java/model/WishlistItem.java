@@ -4,11 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class WishlistItem implements Serializable {
@@ -16,15 +20,17 @@ public class WishlistItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
 	@ManyToOne
-	@Column(name = "WISHLIST_ID")
+	@JoinColumn(name = "wishlist_id", foreignKey = @ForeignKey(name = "fk_wishlistitem_wishlist"))
 	private Wishlist wishlist;
 
 	@OneToOne
-	@Column(name = "DONATIVE_ID")
+	@JoinColumn(name = "donative_id", foreignKey = @ForeignKey(name = "fk_wishlistitem_donative"))
 	private Donative donative;
 
 	private double quantity;

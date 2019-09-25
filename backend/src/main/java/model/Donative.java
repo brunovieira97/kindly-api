@@ -2,11 +2,16 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Donative implements Serializable {
@@ -14,12 +19,15 @@ public class Donative implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
 	private String description;
 
 	@ManyToOne
+	@JoinColumn(name = "donativetype_id", foreignKey = @ForeignKey(name = "fk_donative_donativetype"))
 	private DonativeType type;
 
 	public Donative() {

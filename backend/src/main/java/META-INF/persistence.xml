@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+	version="2.2">
+
+	<persistence-unit name="kindly_persistence_unit">
+		<class>model.Address</class>
+		<class>model.CollectionPoint</class>
+		<class>model.Donation</class>
+		<class>model.DonationItem</class>
+		<class>model.Donative</class>
+		<class>model.DonativeType</class>
+		<class>model.Institution</class>
+		<class>model.User</class>
+		<class>model.Wishlist</class>
+		<class>model.WishlistItem</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+
+			<property name="hibernate.connection.url" value="jdbc:mysql://<SERVERNAME>/<DATABASENAME>" />
+			<property name="hibernate.connection.username" value="<USERNAME>" />
+			<property name="hibernate.connection.password" value="<PASSWORD>" />
+			
+			<!-- To create database schema using Hibernate, change this to "create" -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />			
+
+			<property name="hibernate.archive.autodetection" value="true" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

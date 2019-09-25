@@ -6,11 +6,15 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Donation implements Serializable {
@@ -18,20 +22,22 @@ public class Donation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
 	@ManyToOne
-	@Column(name = "DONATOR_ID")
+	@JoinColumn(name = "donator_id", foreignKey = @ForeignKey(name = "fk_donation_donator"))
 	private User donator;
 
 	@ManyToOne
-	@Column(name = "INSTITUTION_ID")
+	@JoinColumn(name = "institution_id", foreignKey = @ForeignKey(name = "fk_donation_institution"))
 	private Institution institution;
 
 	private Date date;
 
-	@OneToMany
+	@OneToMany(mappedBy = "donation")
 	private Set<DonationItem> items;
 
 	public Donation() {

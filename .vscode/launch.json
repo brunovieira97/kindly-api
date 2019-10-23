@@ -6,16 +6,10 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "Debug (Launch) - Current File",
-			"request": "launch",
-			"mainClass": "${file}"
-		},
-		{
-			"type": "java",
 			"name": "Debug (Launch) - Kindly API",
 			"request": "launch",
-			"mainClass": "app.App",
-			"projectName": "kindly"
+			"mainClass": "com.kappa.kindly.KindlyAPI",
+			"projectName": "api"
 		}
 	]
 }

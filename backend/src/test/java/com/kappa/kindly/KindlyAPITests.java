@@ -1,10 +1,10 @@
-package com.kappa.kindly.api;
+package com.kappa.kindly;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiApplicationTests {
+class KindlyAPITests {
 
 	@Test
 	void contextLoads() {

@@ -1,0 +1,30 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/java"
+    }
+  ],
+  "env": {
+    "SPRING_DATASOURCE_PASSWORD": {
+      "required": true
+    },
+    "SPRING_DATASOURCE_URL": {
+      "required": true
+    },
+    "SPRING_DATASOURCE_USERNAME": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "kindly-api",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}

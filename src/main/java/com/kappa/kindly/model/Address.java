@@ -147,10 +147,18 @@ public class Address implements Serializable {
 		this.user = user;
 	}
 
+	public String getUF() {
+		return UF;
+	}
+
+	public void setUF(String uF) {
+		UF = uF;
+	}
+
 	@Override
 	public String toString() {
-		return "Address [cityName=" + cityName + ", countryName=" + countryName + ", id=" + id + ", neighborhoodName="
-				+ neighborhoodName + ", number=" + number + ", postalCode=" + postalCode + ", stateName=" + stateName
-				+ ", streetName=" + streetName + ", user=" + user + "]";
+		return "Address [UF=" + UF + ", cityName=" + cityName + ", countryName=" + countryName + ", id=" + id
+				+ ", neighborhoodName=" + neighborhoodName + ", number=" + number + ", postalCode=" + postalCode
+				+ ", stateName=" + stateName + ", streetName=" + streetName + ", user=" + user + "]";
 	}
 }

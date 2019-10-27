@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -55,11 +56,11 @@ public class User implements Serializable {
 	@UpdateTimestamp
 	private Timestamp updatedOn;
 
-	@OneToOne(optional = true)
+	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_user_address"))
 	private Address address;
 
-	@OneToMany(mappedBy = "administrator")
+	@OneToMany(mappedBy = "administrator", cascade = CascadeType.ALL)
 	private List<Institution> administeredInstitutions;
 
 	public User() {

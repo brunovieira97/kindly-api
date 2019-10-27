@@ -2,6 +2,7 @@ package com.kappa.kindly.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -37,7 +38,7 @@ public class CollectionPoint implements Serializable {
 	@JoinColumn(name = "institution_id", foreignKey = @ForeignKey(name = "fk_collectionpoint_institution"))
 	private Institution institution;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_collectionpoint_address"))
 	private Address address;
 	

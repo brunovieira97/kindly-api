@@ -49,19 +49,21 @@ public class Address implements Serializable {
 
 	}
 
-	public Address(String streetName, String number, String cityName, String stateName) {
+	public Address(String streetName, String number, String cityName, String stateName, String UF) {
 		this.streetName = streetName;
 		this.number = number;
 		this.cityName = cityName;
 		this.stateName = stateName;
+		this.UF = UF;
 	}
 
-	public Address(String streetName, String number, String neighborhoodName, String cityName, String stateName, String countryName, String postalCode) {
+	public Address(String streetName, String number, String neighborhoodName, String cityName, String stateName, String UF, String countryName, String postalCode) {
 		this(
 			streetName,
 			number,
 			cityName,
-			stateName
+			stateName,
+			UF
 		);
 
 		this.neighborhoodName = neighborhoodName;

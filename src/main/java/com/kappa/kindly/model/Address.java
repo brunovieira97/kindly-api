@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -37,33 +36,30 @@ public class Address implements Serializable {
 	private String stateName;
 
 	@NotBlank(message = "State's UF cannot be blank or null.")
-	private String UF;
+	private String uf;
 	
 	@Nullable
 	private String neighborhoodName, postalCode, countryName;
-
-	@OneToOne(mappedBy = "address")
-	private User user;
 
 	public Address() {
 
 	}
 
-	public Address(String streetName, String number, String cityName, String stateName, String UF) {
+	public Address(String streetName, String number, String cityName, String stateName, String uf) {
 		this.streetName = streetName;
 		this.number = number;
 		this.cityName = cityName;
 		this.stateName = stateName;
-		this.UF = UF;
+		this.uf = uf;
 	}
 
-	public Address(String streetName, String number, String neighborhoodName, String cityName, String stateName, String UF, String countryName, String postalCode) {
+	public Address(String streetName, String number, String neighborhoodName, String cityName, String stateName, String uf, String countryName, String postalCode) {
 		this(
 			streetName,
 			number,
 			cityName,
 			stateName,
-			UF
+			uf
 		);
 
 		this.neighborhoodName = neighborhoodName;
@@ -139,26 +135,18 @@ public class Address implements Serializable {
 		this.postalCode = postalCode;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public String getUF() {
-		return UF;
+		return uf;
 	}
 
-	public void setUF(String uF) {
-		UF = uF;
+	public void setUF(String uf) {
+		this.uf = uf;
 	}
 
 	@Override
 	public String toString() {
-		return "Address [UF=" + UF + ", cityName=" + cityName + ", countryName=" + countryName + ", id=" + id
-				+ ", neighborhoodName=" + neighborhoodName + ", number=" + number + ", postalCode=" + postalCode
-				+ ", stateName=" + stateName + ", streetName=" + streetName + ", user=" + user + "]";
+		return "Address [cityName=" + cityName + ", countryName=" + countryName + ", id=" + id + ", neighborhoodName="
+				+ neighborhoodName + ", number=" + number + ", postalCode=" + postalCode + ", stateName=" + stateName
+				+ ", streetName=" + streetName + ", uf=" + uf + "]";
 	}
 }

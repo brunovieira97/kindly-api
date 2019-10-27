@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -45,7 +46,7 @@ public class Donation implements Serializable {
 	@NotNull(message = "Date cannot be null.")
 	private Date date;
 
-	@OneToMany(mappedBy = "donation")
+	@OneToMany(mappedBy = "donation", cascade = CascadeType.ALL)
 	private Set<DonationItem> items;
 
 	public Donation() {

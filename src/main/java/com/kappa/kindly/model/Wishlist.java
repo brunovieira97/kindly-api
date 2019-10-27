@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -44,7 +45,7 @@ public class Wishlist implements Serializable {
 	@JoinColumn(name = "institution_id", foreignKey = @ForeignKey(name = "fk_wishlist_institution"))
 	private Institution institution;
 
-	@OneToMany(mappedBy = "wishlist")
+	@OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL)
 	private List<WishlistItem> items;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT-03:00")

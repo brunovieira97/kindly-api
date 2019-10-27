@@ -3,6 +3,7 @@ package com.kappa.kindly.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -40,18 +41,18 @@ public class Institution implements Serializable {
 	@Nullable
 	private String description;
 
-	@OneToOne(optional = true)
+	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_institution_address"))
 	private Address address;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "administrator_id", foreignKey = @ForeignKey(name = "fk_institution_administrator"))
 	private User administrator;
 
-	@OneToMany(mappedBy = "institution")
+	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
 	private Set<Wishlist> wishlists;
 
-	@OneToMany(mappedBy = "institution")
+	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
 	private Set<CollectionPoint> collectionPoints;
 
 	public Institution() {

@@ -3,7 +3,6 @@ package com.kappa.kindly.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
@@ -59,9 +57,6 @@ public class User implements Serializable {
 	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_user_address"))
 	private Address address;
-
-	@OneToMany(mappedBy = "administrator", cascade = CascadeType.ALL)
-	private List<Institution> administeredInstitutions;
 
 	public User() {
 
@@ -144,14 +139,6 @@ public class User implements Serializable {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	public List<Institution> getAdministeredInstitutions() {
-		return administeredInstitutions;
-	}
-
-	public void setAdministeredInstitutions(List<Institution> administeredInstitutions) {
-		this.administeredInstitutions = administeredInstitutions;
-	}
 
 	public String getCPF() {
 		return CPF;
@@ -163,9 +150,8 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [CPF=" + CPF + ", address=" + address + ", administeredInstitutions=" + administeredInstitutions
-				+ ", createdOn=" + createdOn + ", email=" + email + ", firstName=" + firstName + ", id=" + id
-				+ ", lastName=" + lastName + ", password=" + Arrays.toString(password) + ", updatedOn=" + updatedOn
-				+ "]";
+		return "User [CPF=" + CPF + ", address=" + address + ", createdOn=" + createdOn + ", email=" + email
+				+ ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", password="
+				+ Arrays.toString(password) + ", updatedOn=" + updatedOn + "]";
 	}
 }

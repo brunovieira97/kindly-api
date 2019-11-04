@@ -44,6 +44,9 @@ public class InstitutionController {
 		if (name != null)
 			results.addAll(institutionRepository.findByName(name));
 
+		if(wishlistItemName != null)	
+			results.addAll(institutionRepository.findByDonative(wishlistItemName));
+
 		if (results.isEmpty())
 			return ResponseEntity.notFound().build();
 

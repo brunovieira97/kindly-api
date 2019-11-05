@@ -16,7 +16,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 	@Query("Select I from Institution I Where I.name like %?1%")
 	List<Institution> findByName(String name);
 
-	@Query("Select I " +
+	@Query(value = "Select I " +
 			"from Institution I, " +
 			  "Wishlist W, " +
 			  "WishlistItem WL, " +
@@ -24,6 +24,6 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 			"Where I.id = W.institution_id " +
 			  "and w.id = WL.wishlist_id " +
 			  "and D.id = WL.donative_id " +
-			  "and D.description like %?1%")
+			  "and D.description like %?1%", nativeQuery = true)
 	List<Institution> findByDonative(String description);
 }

@@ -45,7 +45,7 @@ public class Institution implements Serializable {
 	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_institution_address"))
 	private Address address;
 	
-	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "administrator_id", foreignKey = @ForeignKey(name = "fk_institution_administrator"))
 	private User administrator;
 

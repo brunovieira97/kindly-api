@@ -1,7 +1,5 @@
 package com.kappa.kindly.config;
 
-import java.util.Arrays;
-
 import com.kappa.kindly.security.JwtAuthenticationEntryPoint;
 import com.kappa.kindly.security.JwtRequestFilter;
 
@@ -20,9 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 
 @Configuration
@@ -58,20 +54,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
+	CorsFilter corsFilter() {
+		CorsFilter filter = new CorsFilter();
 
-		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
-        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-		
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		
-		source.registerCorsConfiguration("/**", configuration);
-		
-		return source;
+		return filter;
 	}
+
+	// @Bean
+	// CorsConfigurationSource corsConfigurationSource() {
+	// 	CorsConfiguration configuration = new CorsConfiguration();
+
+	// 	configuration.setAllowCredentials(true);
+	// 	configuration.addAllowedOrigin("*");
+	// 	configuration.addAllowedHeader("*");
+	// 	configuration.addAllowedMethod("*");
+		
+	// 	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		
+	// 	source.registerCorsConfiguration("/**", configuration);
+		
+	// 	return source;
+	// }
 	
 
 	@Override
@@ -80,11 +83,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.cors().and()
 			.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.antMatchers("/signin", "/signup").permitAll()
 				.antMatchers(HttpMethod.GET, "/institution", "/institution/**").permitAll()
 			.anyRequest().authenticated().and()
 			.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+		httpSecurity.addFilterBefore(corsFilter(), SessionManagementFilter.class);
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }

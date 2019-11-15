@@ -9,6 +9,7 @@ import com.kappa.kindly.repository.CollectionPointRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class CollectionPointController {
 	private CollectionPointRepository collectionPointRepository;
 
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CollectionPoint> FindByID(@Valid @PathVariable(value = "id") long id) {
 
@@ -32,18 +34,21 @@ public class CollectionPointController {
 		return ResponseEntity.ok(collectionPointRepository.findById(id));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CollectionPoint>> FindAll() {
 		
 		return ResponseEntity.ok(collectionPointRepository.findAll());
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<CollectionPoint> Create(@Valid @RequestBody CollectionPoint collectionpoint) {
 		
 		return ResponseEntity.ok(collectionPointRepository.save(collectionpoint));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<CollectionPoint> Update(@Valid @RequestBody CollectionPoint collectionpoint) {
 		
@@ -53,6 +58,7 @@ public class CollectionPointController {
 		return ResponseEntity.ok(collectionPointRepository.save(collectionpoint));
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<CollectionPoint> Delete(@Valid @PathVariable(value = "id") long id) {
 

@@ -9,6 +9,7 @@ import com.kappa.kindly.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class UserController {
 	private UserRepository userRepository;
 
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> FindByID(@Valid @PathVariable(value = "id") long id) {
 
@@ -32,12 +34,14 @@ public class UserController {
 		return ResponseEntity.ok(userRepository.findById(id));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<User>> FindAll() {
 		
 		return ResponseEntity.ok(userRepository.findAll());
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<User> Update(@Valid @RequestBody User user) {
 		
@@ -47,6 +51,7 @@ public class UserController {
 		return ResponseEntity.ok(userRepository.save(user));
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> Delete(@Valid @PathVariable(value = "id") long id) {
 

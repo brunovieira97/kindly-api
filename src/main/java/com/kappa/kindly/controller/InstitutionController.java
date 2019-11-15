@@ -9,6 +9,7 @@ import com.kappa.kindly.model.Institution;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class InstitutionController {
 	private InstitutionRepository institutionRepository;
 
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Institution> FindByID(@Valid @PathVariable(value = "id") long id) {
 
@@ -32,18 +34,21 @@ public class InstitutionController {
 		return ResponseEntity.ok(institutionRepository.findById(id));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Institution>> FindAll() {
 		
 		return ResponseEntity.ok(institutionRepository.findAll());
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Institution> Create(@Valid @RequestBody Institution institution) {
 		
 		return ResponseEntity.ok(institutionRepository.save(institution));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Institution> Update(@Valid @RequestBody Institution institution) {
 		
@@ -53,6 +58,7 @@ public class InstitutionController {
 		return ResponseEntity.ok(institutionRepository.save(institution));
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Institution> Delete(@Valid @PathVariable(value = "id") long id) {
 

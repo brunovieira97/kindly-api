@@ -9,6 +9,7 @@ import com.kappa.kindly.repository.DonativeTypeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class DonativeTypeController {
 	private DonativeTypeRepository donativeTypeRepository;
 
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DonativeType> FindByID(@Valid @PathVariable(value = "id") long id) {
 
@@ -32,18 +34,21 @@ public class DonativeTypeController {
 		return ResponseEntity.ok(donativeTypeRepository.findById(id));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<DonativeType>> FindAll() {
 		
 		return ResponseEntity.ok(donativeTypeRepository.findAll());
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<DonativeType> Create(@Valid @RequestBody DonativeType donativetype) {
 		
 		return ResponseEntity.ok(donativeTypeRepository.save(donativetype));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<DonativeType> Update(@Valid @RequestBody DonativeType donativetype) {
 		
@@ -53,6 +58,7 @@ public class DonativeTypeController {
 		return ResponseEntity.ok(donativeTypeRepository.save(donativetype));
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<DonativeType> Delete(@Valid @PathVariable(value = "id") long id) {
 

@@ -9,6 +9,7 @@ import com.kappa.kindly.repository.WishlistRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class WishlistController {
 	private WishlistRepository wishlistRepository;
 
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Wishlist> FindByID(@Valid @PathVariable(value = "id") long id) {
 
@@ -32,18 +34,21 @@ public class WishlistController {
 		return ResponseEntity.ok(wishlistRepository.findById(id));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Wishlist>> FindAll() {
 		
 		return ResponseEntity.ok(wishlistRepository.findAll());
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Wishlist> Create(@Valid @RequestBody Wishlist Wishlist) {
 		
 		return ResponseEntity.ok(wishlistRepository.save(Wishlist));
 	}
 
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Wishlist> Update(@Valid @RequestBody Wishlist Wishlist) {
 		
@@ -53,6 +58,7 @@ public class WishlistController {
 		return ResponseEntity.ok(wishlistRepository.save(Wishlist));
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Wishlist> Delete(@Valid @PathVariable(value = "id") long id) {
 

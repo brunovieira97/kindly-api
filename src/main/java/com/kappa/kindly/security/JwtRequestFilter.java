@@ -32,6 +32,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		final String requestTokenHeader = request.getHeader("Authorization");
 
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Headers", "content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush");
+
 		String email = null;
 		String token = null;
 

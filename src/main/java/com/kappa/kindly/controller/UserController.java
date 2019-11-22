@@ -1,6 +1,7 @@
 package com.kappa.kindly.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -30,6 +31,17 @@ public class UserController {
 			return ResponseEntity.notFound().build();
 		
 		return ResponseEntity.ok(userRepository.findById(id));
+	}
+
+	@RequestMapping(value = "/{email}", method = RequestMethod.GET)
+	public ResponseEntity<User> FindByEmail(@Valid @PathVariable(value = "email") String email) {
+
+		Optional<User> result = userRepository.findByEmail(email);
+
+		if (!result.isPresent())
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.ok(result.get());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

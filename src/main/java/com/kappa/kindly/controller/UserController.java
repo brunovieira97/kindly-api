@@ -23,7 +23,7 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-	public ResponseEntity<User> FindByID(@Valid @PathVariable(value = "id") long id) {
+	public ResponseEntity<User> FindByID(long id) {
 
 		if ((!userRepository.existsById(id)) || (userRepository.findById(id) == null))
 			return ResponseEntity.notFound().build();

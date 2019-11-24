@@ -2,6 +2,7 @@ package com.kappa.kindly.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Collection;
 

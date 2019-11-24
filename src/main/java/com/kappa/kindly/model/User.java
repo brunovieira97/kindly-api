@@ -2,7 +2,9 @@ package com.kappa.kindly.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Arrays;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +22,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,17 +39,18 @@ public class User implements Serializable {
 
 	@NotBlank(message = "First name cannot be blank or null.")
 	private String firstName;
-	
+
 	@NotBlank(message = "Last name cannot be blank or null.")
 	private String lastName;
-	
+
 	@NotBlank(message = "E-mail cannot be blank or null.")
 	private String email;
-	
+
 	@NotBlank(message = "CPF cannot be blank or null.")
 	private String CPF;
-	
-	private char[] password;
+
+	@NotBlank(message = "Password cannot be blank or null.")
+	private String password;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT-03:00")
 	@CreationTimestamp
@@ -58,24 +64,25 @@ public class User implements Serializable {
 	@JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "fk_user_address"))
 	private Address address;
 
+
 	public User() {
 
 	}
 
-	public User(String firstName, String lastName, String email, char[] password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}
 
-	public User(String firstName, String lastName, String email, char[] password, Address address) {
-		this(
-			firstName,
-			lastName,
-			email,
-			password
-		);
+	public User(String firstName, String lastName, String email, String password) {
+		this(email, password);
+
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public User(String firstName, String lastName, String email, String password, Address address) {
+		this(firstName, lastName, email, password);
 
 		this.address = address;
 	}
@@ -116,11 +123,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public char[] getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(char[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -148,10 +155,49 @@ public class User implements Serializable {
 		this.CPF = CPF;
 	}
 
+	/**
+	 * TODO: define if roles will be used
+	 */
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("USER");
+
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+
+		authorities.add(authority);
+		
+		return authorities;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.getEmail();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return "User [CPF=" + CPF + ", address=" + address + ", createdOn=" + createdOn + ", email=" + email
-				+ ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", password="
-				+ Arrays.toString(password) + ", updatedOn=" + updatedOn + "]";
+				+ ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", password=" + password
+				+ ", updatedOn=" + updatedOn + "]";
 	}
 }

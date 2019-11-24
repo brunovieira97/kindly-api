@@ -38,12 +38,6 @@ public class UserController {
 		return ResponseEntity.ok(userRepository.findAll());
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> Create(@Valid @RequestBody User user) {
-		
-		return ResponseEntity.ok(userRepository.save(user));
-	}
-
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<User> Update(@Valid @RequestBody User user) {
 		

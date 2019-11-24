@@ -23,8 +23,6 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> FindByID(@Valid @PathVariable(value = "id") long id) {
 
 		if ((!userRepository.existsById(id)) || (userRepository.findById(id) == null))

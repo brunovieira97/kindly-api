@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -27,6 +29,7 @@ public class DonativeType implements Serializable {
 	@NotBlank(message = "Description cannot be blank or null.")
 	private String description;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "type")
 	private List<Donative> donatives;
 	

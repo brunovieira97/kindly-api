@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -26,6 +28,7 @@ public class WishlistItem implements Serializable {
 	@Column(updatable = false, nullable = false)
 	private long id;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "wishlist_id", foreignKey = @ForeignKey(name = "fk_wishlistitem_wishlist"))
 	private Wishlist wishlist;

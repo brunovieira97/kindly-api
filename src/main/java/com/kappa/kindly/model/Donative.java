@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -28,6 +30,7 @@ public class Donative implements Serializable {
 	@NotBlank(message = "Description cannot be blank or null.")
 	private String description;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "donativetype_id", foreignKey = @ForeignKey(name = "fk_donative_donativetype"))
 	private DonativeType type;

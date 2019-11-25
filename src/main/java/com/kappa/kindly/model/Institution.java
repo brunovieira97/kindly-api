@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
 
@@ -49,9 +51,11 @@ public class Institution implements Serializable {
 	@JoinColumn(name = "administrator_id", foreignKey = @ForeignKey(name = "fk_institution_administrator"))
 	private User administrator;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
 	private Set<Wishlist> wishlists;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
 	private Set<CollectionPoint> collectionPoints;
 

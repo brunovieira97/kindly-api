@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -49,6 +50,7 @@ public class Wishlist implements Serializable {
 	private Institution institution;
 
 	@JsonManagedReference
+	@OrderBy("priority ASC")
 	@OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL)
 	private List<WishlistItem> items;
 

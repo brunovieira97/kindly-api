@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -33,9 +33,8 @@ public class WishlistItem implements Serializable {
 	@JoinColumn(name = "wishlist_id", foreignKey = @ForeignKey(name = "fk_wishlistitem_wishlist"))
 	private Wishlist wishlist;
 
-	@OneToOne
-	@JoinColumn(name = "donative_id", foreignKey = @ForeignKey(name = "fk_wishlistitem_donative"))
-	private Donative donative;
+	@NotBlank(message = "Wishlist item's name cannot be blank or null.")
+	private String name;
 
 	@NotNull(message = "Quantity cannot be null.")
 	private double quantity;
@@ -47,20 +46,11 @@ public class WishlistItem implements Serializable {
 
 	}
 
-	public WishlistItem(Wishlist wishlist, Donative donative, double quantity, int priority) {
+	public WishlistItem(Wishlist wishlist, String name, double quantity, int priority) {
 		this.wishlist = wishlist;
-		this.donative = donative;
+		this.name = name;
 		this.quantity = quantity;
 		this.priority = priority;
-	}
-
-	public WishlistItem(Wishlist wishlist, Donative donative, double quantity) {
-		this(
-			wishlist,
-			donative,
-			quantity,
-			1
-		);
 	}
 
 	public static long getSerialversionuid() {
@@ -83,12 +73,12 @@ public class WishlistItem implements Serializable {
 		this.wishlist = wishlist;
 	}
 
-	public Donative getDonative() {
-		return donative;
+	public String getName() {
+		return name;
 	}
 
-	public void setDonative(Donative donative) {
-		this.donative = donative;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public double getQuantity() {
@@ -109,7 +99,8 @@ public class WishlistItem implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WishlistItem [id=" + id + ", priority=" + priority + ", quantity=" + quantity + "]";
+		return "WishlistItem [id=" + id + ", name=" + name + ", priority=" + priority + ", quantity=" + quantity
+				+ ", wishlist=" + wishlist + "]";
 	}
 
 }

@@ -55,10 +55,6 @@ public class Institution implements Serializable {
 	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
 	private Set<Wishlist> wishlists;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
-	private Set<CollectionPoint> collectionPoints;
-
 	public Institution() {
 
 	}
@@ -120,14 +116,6 @@ public class Institution implements Serializable {
 		this.wishlists = wishlists;
 	}
 
-	public Set<CollectionPoint> getCollectionPoints() {
-		return collectionPoints;
-	}
-
-	public void setCollectionPoints(Set<CollectionPoint> collectionPoints) {
-		this.collectionPoints = collectionPoints;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -138,9 +126,8 @@ public class Institution implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Institution [address=" + address + ", administrator=" + administrator + ", collectionPoints="
-				+ collectionPoints + ", description=" + description + ", id=" + id + ", name=" + name + ", phoneNumber="
-				+ phoneNumber + ", wishlists=" + wishlists + "]";
+		return "Institution [address=" + address + ", administrator=" + administrator + ", description=" + description
+				+ ", id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", wishlists=" + wishlists + "]";
 	}
 	
 }

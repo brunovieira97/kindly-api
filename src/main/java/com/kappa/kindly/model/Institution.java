@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
 
@@ -49,11 +51,9 @@ public class Institution implements Serializable {
 	@JoinColumn(name = "administrator_id", foreignKey = @ForeignKey(name = "fk_institution_administrator"))
 	private User administrator;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
 	private Set<Wishlist> wishlists;
-
-	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
-	private Set<CollectionPoint> collectionPoints;
 
 	public Institution() {
 
@@ -116,14 +116,6 @@ public class Institution implements Serializable {
 		this.wishlists = wishlists;
 	}
 
-	public Set<CollectionPoint> getCollectionPoints() {
-		return collectionPoints;
-	}
-
-	public void setCollectionPoints(Set<CollectionPoint> collectionPoints) {
-		this.collectionPoints = collectionPoints;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -134,9 +126,8 @@ public class Institution implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Institution [address=" + address + ", administrator=" + administrator + ", collectionPoints="
-				+ collectionPoints + ", description=" + description + ", id=" + id + ", name=" + name + ", phoneNumber="
-				+ phoneNumber + ", wishlists=" + wishlists + "]";
+		return "Institution [address=" + address + ", administrator=" + administrator + ", description=" + description
+				+ ", id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", wishlists=" + wishlists + "]";
 	}
 	
 }

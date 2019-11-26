@@ -15,11 +15,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
@@ -41,14 +44,17 @@ public class Wishlist implements Serializable {
 	@Nullable
 	private String description;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "institution_id", foreignKey = @ForeignKey(name = "fk_wishlist_institution"))
 	private Institution institution;
 
+	@JsonManagedReference
+	@OrderBy("priority ASC")
 	@OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL)
 	private List<WishlistItem> items;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT-03:00")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	@NotNull(message = "Begin/End date cannot be null.")
 	private Date beginDate, endDate;

@@ -85,4 +85,10 @@ public class InstitutionController {
 
 		return ResponseEntity.ok(institutionResponse);
 	}
+
+	@RequestMapping(value = "/last3", method = RequestMethod.GET)
+	public ResponseEntity<List<Institution>> GetLast3() {
+
+		return ResponseEntity.ok(institutionRepository.getLast3());
+	}
 }

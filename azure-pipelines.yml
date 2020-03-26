@@ -9,6 +9,12 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  "jwt.secret": $(jwt.secret)
+  "SPRING_DATASOURCE_URL": $(SPRING_DATASOURCE_URL)
+  "SPRING_DATASOURCE_USERNAME": $(SPRING_DATASOURCE_USERNAME)
+  "SPRING_DATASOURCE_PASSWORD": $(SPRING_DATASOURCE_PASSWORD)
+
 steps:
 - task: Maven@3
   inputs:
